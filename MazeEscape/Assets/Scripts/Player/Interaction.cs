@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class Interaction : MonoBehaviour
 {
-    private Trap _trap = new Trap();
-
     [SerializeField]
     private Image crosshairUI;
     [SerializeField]
@@ -109,7 +107,6 @@ public class Interaction : MonoBehaviour
                         case "Key":
                             // ¿­¼è È¹µæ, UI¿¡ È¹µæÇÑ ¿­¼è °¹¼ö Ãâ·Â.
                             _inventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
-                            _trap.AddKeyCount();
                             break;
                     }
                     Destroy(hitInfo.transform.gameObject);

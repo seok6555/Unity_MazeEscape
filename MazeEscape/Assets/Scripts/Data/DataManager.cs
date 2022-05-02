@@ -15,11 +15,13 @@ public class DataManager
     //Key : int (몬스터 스탯 - 3번, NPC 스탯 - 4번 이런식으로 id를 부여해서 데이터를 찾음.)
     //Value : Stat 객체
     public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
+    public Dictionary<int, Data.ItemEffect> ItemEffectDict { get; private set; } = new Dictionary<int, Data.ItemEffect>();
 
     public void Init()
     {
         //게임이 시작되면 StatData.json 파일로부터 읽어들인 데이터가 저장된 Stat 객체들이 담긴 딕셔너리를 만들어 StatDict 프로퍼티에 저장.
         StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
+        ItemEffectDict = LoadJson<Data.ItemEffectData, int, Data.ItemEffect>("ItemEffectData").MakeDict();
     }
 
     //제네릭 매개변수

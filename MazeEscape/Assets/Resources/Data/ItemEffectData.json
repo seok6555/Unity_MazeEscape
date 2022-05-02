@@ -1,0 +1,15 @@
+{
+  "ItemEffects": [
+    {
+      "itemID": "1",
+      "itemName": "battery",
+      "num": "30.0"
+    },
+
+    {
+      "itemID": "2",
+      "itemName": "100",
+      "num": "30.0"
+    }
+  ]
+}

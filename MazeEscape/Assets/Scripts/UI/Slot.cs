@@ -2,25 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, IPointerClickHandler
 {
-    public Item item;       // 획득한 아이템
-    public int itemCount;   // 획득한 아이템의 갯수
-    public Image itemImage; // 아이템의 이미지
+    public Item item;               // 획득한 아이템
+    public int itemCount;           // 획득한 아이템의 갯수
+    public Image itemImage;         // 아이템의 이미지
+    public Sprite emptySlotImage;   // 빈 슬롯 이미지
 
     [SerializeField]
     private Text text_Count;
     [SerializeField]
     private GameObject go_CountImage;
-
-    // 이미지의 투명도 조절.
-    private void SetColor(float _alpha)
-    {
-        Color color = itemImage.color;
-        color.a = _alpha;
-        itemImage.color = color;
-    }
 
     // 아이템 획득.
     public void AddItem(Item _item, int _count = 1)
@@ -39,8 +33,6 @@ public class Slot : MonoBehaviour
             text_Count.text = "0";
             go_CountImage.SetActive(false);
         }
-
-        SetColor(1);
     }
 
     // 아이템 갯수 조절.
@@ -60,10 +52,23 @@ public class Slot : MonoBehaviour
     {
         item = null;
         itemCount = 0;
-        itemImage.sprite = null;
-        SetColor(0);
+        itemImage.sprite = emptySlotImage;
 
         text_Count.text = "0";
         go_CountImage.SetActive(false);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (item != null)
+            {
+                if (item.ItemType == Item.eItemType.Used)
+                {
+                    SetSlotCount(-1);
+                }
+            }
+        }
     }
 }

@@ -5,20 +5,17 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public static bool inventoryActivated = false;
-
-    [SerializeField]
-    private Text text_Count; // æ∆¿Ã≈€ ∞πºˆ ≈ÿΩ∫∆Æ
-    private Item item; // »πµÊ«— æ∆¿Ã≈€
-
-    private int itemCount; // »πµÊ«— æ∆¿Ã≈€ ∞πºˆ
-
     [SerializeField]
     private GameObject go_InventoryBase;
     [SerializeField]
     private GameObject go_SlotParent;
 
     private Slot[] slots;
+    //
+    [SerializeField]
+    private Text text_Count; // æ∆¿Ã≈€ ∞πºˆ ≈ÿΩ∫∆Æ
+
+    private int itemCount; // »πµÊ«— æ∆¿Ã≈€ ∞πºˆ
 
     private void Start()
     {
@@ -34,15 +31,15 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            inventoryActivated = !inventoryActivated;
-
-            if (inventoryActivated)
+            if (GameManager.Instance.UIState != eUIState.Inventory)
             {
                 OpenInventory();
+                GameManager.Instance.CurrentUIState(eUIState.Inventory);
             }
             else
             {
                 CloseInventory();
+                GameManager.Instance.CurrentUIState(eUIState.None);
             }
         }
     }
