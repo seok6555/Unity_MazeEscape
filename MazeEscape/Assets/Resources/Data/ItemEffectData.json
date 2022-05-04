@@ -1,17 +1,15 @@
 {
-  "itemEffects": [
+  "ItemEffects": [
     {
-      "itemName": "Battery",
-      "itemType": "Used",
-      "part": "battery",
+      "itemID": "1",
+      "itemName": "battery",
       "num": "30.0"
     },
 
     {
-      "itemName": "Key",
-      "itemType": "Ingredient",
-      "part": null,
-      "num": null
+      "itemID": "2",
+      "itemName": "100",
+      "num": "30.0"
     }
   ]
 }

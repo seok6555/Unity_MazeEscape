@@ -32,34 +32,31 @@ namespace Data
         }
     }
     #endregion
-<<<<<<< HEAD
 
     #region ItemEffect
     [Serializable]
     public class ItemEffect
     {
+        public int itemID;      // ¾ÆÀÌÅÛÀÇ ID (ÀÓ½Ã)
         public string itemName; // ¾ÆÀÌÅÛÀÇ ÀÌ¸§ (Å°°ª)
-        public string itemType; // ¾ÆÀÌÅÛÀÇ Å¸ÀÔ
-        public string part;     // ¾ÆÀÌÅÛÀÇ Àû¿ë ºÎÀ§
-        public int num;         // ¾ÆÀÌÅÛÀÇ ¼öÄ¡
+        //public string part;   // ºÎÀ§
+        public int num;       // ¼öÄ¡
     }
 
     [Serializable]
-    public class ItemEffectData : ILoader<string, ItemEffect>
+    public class ItemEffectData : ILoader<int, ItemEffect>
     {
         public List<ItemEffect> itemEffects = new List<ItemEffect>();
 
-        public Dictionary<string, ItemEffect> MakeDict()
+        public Dictionary<int, ItemEffect> MakeDict()
         {
-            Dictionary<string, ItemEffect> dict = new Dictionary<string, ItemEffect>();
+            Dictionary<int, ItemEffect> dict = new Dictionary<int, ItemEffect>();
             foreach (ItemEffect itemEffect in itemEffects)
             {
-                dict.Add(itemEffect.itemName, itemEffect);
+                dict.Add(itemEffect.itemID, itemEffect);
             }
             return dict;
         }
     }
     #endregion
-=======
->>>>>>> parent of db07ee3 (2022.05.02. UI ìˆ˜ì • ìž‘ì—…)
 }

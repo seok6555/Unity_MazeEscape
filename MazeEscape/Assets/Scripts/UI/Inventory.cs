@@ -5,20 +5,17 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public static bool inventoryActivated = false;
-
-    [SerializeField]
-    private Text text_Count; // 아이템 갯수 텍스트
-    private Item item; // 획득한 아이템
-
-    private int itemCount; // 획득한 아이템 갯수
-
     [SerializeField]
     private GameObject go_InventoryBase;
     [SerializeField]
     private GameObject go_SlotParent;
 
     private Slot[] slots;
+    //
+    [SerializeField]
+    private Text text_Count; // 아이템 갯수 텍스트
+
+    private int itemCount; // 획득한 아이템 갯수
 
     private void Start()
     {
@@ -34,15 +31,15 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            inventoryActivated = !inventoryActivated;
-
-            if (inventoryActivated)
+            if (GameManager.Instance.UIState != eUIState.Inventory)
             {
                 OpenInventory();
+                GameManager.Instance.CurrentUIState(eUIState.Inventory);
             }
             else
             {
                 CloseInventory();
+                GameManager.Instance.CurrentUIState(eUIState.None);
             }
         }
     }
@@ -59,9 +56,7 @@ public class Inventory : MonoBehaviour
 
     public void AcquireItem(Item _item, int _count = 1)
     {
-        //if (Item.eItemType.Equipment != _item.ItemType)
-
-        if (_item.ItemType != "Equipment")
+        if (Item.eItemType.Equipment != _item.ItemType)
         {
             for (int i = 0; i < slots.Length; i++)
             {
@@ -83,6 +78,22 @@ public class Inventory : MonoBehaviour
                 slots[i].AddItem(_item, _count);
                 return;
             }
+        }
+    }
+
+    public bool UseItem(int _count = 1)
+    {
+        if (itemCount <= 0)
+        {
+            Debug.Log("아이템이 없습니다.");
+            return false;
+        }
+        else
+        {
+            Debug.Log("아이템 사용");
+            itemCount -= _count;
+            text_Count.text = itemCount.ToString();
+            return true;
         }
     }
 }

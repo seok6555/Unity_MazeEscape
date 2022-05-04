@@ -75,17 +75,4 @@ public class GameManager : MonoBehaviour
     {
         return Resources.Load<T>(path);
     }
-
-    // path 이름을 가진 GameObject 타입의 프리팹을 할당.
-    public GameObject Instantiate(string path, Transform parent = null)
-    {
-        GameObject prefab = Load<GameObject>($"Prefabs/{path}");
-        if (prefab == null)
-        {
-            Debug.Log($"Failed to load prefab : {path}");
-            return null;
-        }
-
-        return Object.Instantiate(prefab, parent);
-    }
 }
