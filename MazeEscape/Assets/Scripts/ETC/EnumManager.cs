@@ -12,5 +12,4 @@ public enum eUIState
     Pause,
     Option,
     Help,
-    Inventory
 }

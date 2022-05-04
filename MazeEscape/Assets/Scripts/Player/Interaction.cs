@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class Interaction : MonoBehaviour
 {
+    private Trap _trap = new Trap();
+
     [SerializeField]
     private Image crosshairUI;
     [SerializeField]
     private Text interactMessage;
     [SerializeField]
     private Inventory _inventory;
-    private FlashlightController _flashlightController;
 
     // Æ¯Á¤ ·¹ÀÌ¾î¿¡¸¸ ¹ÝÀÀÇÏµµ·Ï ¼³Á¤
     // Item - ¹èÅÍ¸®, ¿­¼è
@@ -25,11 +26,6 @@ public class Interaction : MonoBehaviour
     private int rayLength = 5;
 
     private bool isInteractionActivated = false;
-
-    private void Start()
-    {
-        _flashlightController = GetComponentInChildren<FlashlightController>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -95,6 +91,10 @@ public class Interaction : MonoBehaviour
             {
                 if (hitInfo.transform.CompareTag("Item"))
                 {
+<<<<<<< HEAD
+                    //_inventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
+                    _inventory.AcquireItem(hitInfo.transform.GetComponent<Item>());
+=======
                     string pickUpItemName = hitInfo.transform.GetComponent<ItemPickUp>().item.ItemName;
 
                     switch (pickUpItemName)
@@ -107,25 +107,27 @@ public class Interaction : MonoBehaviour
                         case "Key":
                             // ¿­¼è È¹µæ, UI¿¡ È¹µæÇÑ ¿­¼è °¹¼ö Ãâ·Â.
                             _inventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
+                            _trap.AddKeyCount();
                             break;
                     }
+>>>>>>> parent of db07ee3 (2022.05.02. UI ìˆ˜ì • ìž‘ì—…)
                     Destroy(hitInfo.transform.gameObject);
                 }
 
                 if (hitInfo.transform.CompareTag("Door"))
                 {
                     // ¹® ¿©´Â ±â´É ±¸Çö.
-                    if (_inventory.UseItem())
-                    {
-                        if (hitInfo.transform.TryGetComponent<Door>(out Door _door))
-                        {
-                            _door.DoorOpen();
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("¿­¼è°¡ ¾øÀ½");
-                    }
+                    //if (_inventory.UseItem())
+                    //{
+                    //    if (hitInfo.transform.TryGetComponent<Door>(out Door _door))
+                    //    {
+                    //        _door.DoorOpen();
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    Debug.Log("¿­¼è°¡ ¾øÀ½");
+                    //}
                 }
                 ObjectInfoDisappear();
             }
