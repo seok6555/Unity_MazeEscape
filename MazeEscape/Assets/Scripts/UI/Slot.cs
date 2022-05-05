@@ -16,6 +16,13 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private GameObject go_CountImage;
 
+    private ItemEffectDB _itemEffectDB;
+
+    private void Start()
+    {
+        _itemEffectDB = FindObjectOfType<ItemEffectDB>();
+    }
+
     // æ∆¿Ã≈€ »πµÊ.
     public void AddItem(Item _item, int _count = 1)
     {
@@ -47,7 +54,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    //ΩΩ∑‘ √ ±‚»≠.
+    // ΩΩ∑‘ √ ±‚»≠.
     private void ClearSlot()
     {
         item = null;
@@ -58,16 +65,15 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         go_CountImage.SetActive(false);
     }
 
+    // ΩΩ∑‘ æ∆¿Ã≈€ ≈¨∏ØΩ√ ¿Ã∫•∆Æ.
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             if (item != null)
             {
-                if (item.ItemType == Item.eItemType.Used)
-                {
-                    SetSlotCount(-1);
-                }
+                _itemEffectDB.UseItem(item);
+                SetSlotCount(-1);
             }
         }
     }

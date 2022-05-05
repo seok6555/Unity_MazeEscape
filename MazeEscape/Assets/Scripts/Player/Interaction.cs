@@ -43,14 +43,9 @@ public class Interaction : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hitInfo, rayLength, layerMaskInteract))
         {
-            switch (hitInfo.transform.tag)
+            if (hitInfo.transform != null)
             {
-                case "Item":
-                    ObjectInfoAppear();
-                    break;
-                case "Door":
-                    ObjectInfoAppear();
-                    break;
+                ObjectInfoAppear();
             }
         }
         else
@@ -95,37 +90,24 @@ public class Interaction : MonoBehaviour
             {
                 if (hitInfo.transform.CompareTag("Item"))
                 {
-                    string pickUpItemName = hitInfo.transform.GetComponent<ItemPickUp>().item.ItemName;
-
-                    switch (pickUpItemName)
-                    {
-                        case "Battery":
-                            // ¹èÅÍ¸® Ã¤¿ì±â
-                            _inventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
-                            _flashlightController.ChargeBattery(30f);
-                            break;
-                        case "Key":
-                            // ¿­¼è È¹µæ, UI¿¡ È¹µæÇÑ ¿­¼è °¹¼ö Ãâ·Â.
-                            _inventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
-                            break;
-                    }
+                    _inventory.AcquireItem(hitInfo.transform.GetComponent<ItemPickUp>().item);
                     Destroy(hitInfo.transform.gameObject);
                 }
 
                 if (hitInfo.transform.CompareTag("Door"))
                 {
                     // ¹® ¿©´Â ±â´É ±¸Çö.
-                    if (_inventory.UseItem())
-                    {
-                        if (hitInfo.transform.TryGetComponent<Door>(out Door _door))
-                        {
-                            _door.DoorOpen();
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("¿­¼è°¡ ¾øÀ½");
-                    }
+                    //if (_inventory.UseItem())
+                    //{
+                    //    if (hitInfo.transform.TryGetComponent<Door>(out Door _door))
+                    //    {
+                    //        _door.DoorOpen();
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    Debug.Log("¿­¼è°¡ ¾øÀ½");
+                    //}
                 }
                 ObjectInfoDisappear();
             }

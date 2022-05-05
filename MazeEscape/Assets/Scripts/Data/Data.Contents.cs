@@ -37,23 +37,22 @@ namespace Data
     [Serializable]
     public class ItemEffect
     {
-        public int itemID;      // 아이템의 ID (임시)
         public string itemName; // 아이템의 이름 (키값)
-        //public string part;   // 부위
-        public int num;       // 수치
+        public string part;     // 부위
+        public int num;         // 수치
     }
 
     [Serializable]
-    public class ItemEffectData : ILoader<int, ItemEffect>
+    public class ItemEffectData : ILoader<string, ItemEffect>
     {
         public List<ItemEffect> itemEffects = new List<ItemEffect>();
 
-        public Dictionary<int, ItemEffect> MakeDict()
+        public Dictionary<string, ItemEffect> MakeDict()
         {
-            Dictionary<int, ItemEffect> dict = new Dictionary<int, ItemEffect>();
+            Dictionary<string, ItemEffect> dict = new Dictionary<string, ItemEffect>();
             foreach (ItemEffect itemEffect in itemEffects)
             {
-                dict.Add(itemEffect.itemID, itemEffect);
+                dict.Add(itemEffect.itemName, itemEffect);
             }
             return dict;
         }
