@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Battery
   m_EditorClassIdentifier: 
   itemName: Battery
+  itemDesc: "\uC190\uC804\uB4F1\uC744 \uCDA9\uC804\uD560 \uC218 \uC788\uB294 \uBC30\uD130\uB9AC."
   itemType: 1
   itemImage: {fileID: 21300000, guid: d7f663fd74255034c8be2838188f80af, type: 3}
   itemPrefab: {fileID: 1123693314251274, guid: b741fa043c0908c499bb320804aa111b, type: 3}

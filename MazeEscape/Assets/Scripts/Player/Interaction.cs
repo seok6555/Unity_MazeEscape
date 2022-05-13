@@ -11,7 +11,6 @@ public class Interaction : MonoBehaviour
     private Text interactMessage;
     [SerializeField]
     private Inventory _inventory;
-    private FlashlightController _flashlightController;
 
     // 특정 레이어에만 반응하도록 설정
     // Item - 배터리, 열쇠
@@ -22,14 +21,9 @@ public class Interaction : MonoBehaviour
 
     // 상호작용 사거리
     [SerializeField]
-    private int rayLength = 5;
+    private int rayLength = 2;
 
     private bool isInteractionActivated = false;
-
-    private void Start()
-    {
-        _flashlightController = GetComponentInChildren<FlashlightController>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -97,6 +91,7 @@ public class Interaction : MonoBehaviour
                 if (hitInfo.transform.CompareTag("Door"))
                 {
                     // 문 여는 기능 구현.
+                    // 인벤토리에 열쇠가 있는지 없는지 체크하는 방식으로 구현 예정.
                     //if (_inventory.UseItem())
                     //{
                     //    if (hitInfo.transform.TryGetComponent<Door>(out Door _door))

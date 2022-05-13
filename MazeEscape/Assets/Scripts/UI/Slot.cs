@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour, IPointerClickHandler
+public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Item item;               // 획득한 아이템
     public int itemCount;           // 획득한 아이템의 갯수
@@ -21,6 +21,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     private void Start()
     {
         _itemEffectDB = FindObjectOfType<ItemEffectDB>();
+        _itemEffectDB.HideToolTip();
     }
 
     // 아이템 획득.
@@ -76,5 +77,20 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                 SetSlotCount(-1);
             }
         }
+    }
+
+    // 슬롯 아이템 마우스 커서가 들어갈 때 이벤트.
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item != null)
+        {
+            _itemEffectDB.ShowToolTip(item);
+        }
+    }
+
+    // 슬롯 아이템 마우스 커서가 나올 때 이벤트.
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _itemEffectDB.HideToolTip();
     }
 }

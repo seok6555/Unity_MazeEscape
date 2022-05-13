@@ -17,8 +17,22 @@ public class ItemEffectDB : MonoBehaviour
     private ItemEffect[] itemEffects;
     [SerializeField]
     private FlashlightController _flashlightController;
+    [SerializeField]
+    private SlotToolTip _slotToolTip;
 
     private const string Battery = "Battery";
+
+    // 슬롯 툴팁 출현
+    public void ShowToolTip(Item _item)
+    {
+        _slotToolTip.ShowToolTip(_item);
+    }
+
+    // 슬롯 툴팁 제거
+    public void HideToolTip()
+    {
+        _slotToolTip.HideToolTip();
+    }
 
     // 아이템 사용
     public void UseItem(Item _item)
