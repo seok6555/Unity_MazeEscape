@@ -10,6 +10,7 @@ public class ButtonManager : UI_Base
     {
         SceneManager.LoadScene("Stage_1");
         Time.timeScale = 1f;
+        GameManager.Instance.CurrentGameState(eGameState.Play);
     }
 
     //Option 옵션 버튼

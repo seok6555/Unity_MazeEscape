@@ -32,30 +32,4 @@ namespace Data
         }
     }
     #endregion
-
-    #region ItemEffect
-    [Serializable]
-    public class ItemEffect
-    {
-        public string itemName; // 아이템의 이름 (키값)
-        public string part;     // 부위
-        public int num;         // 수치
-    }
-
-    [Serializable]
-    public class ItemEffectData : ILoader<string, ItemEffect>
-    {
-        public List<ItemEffect> itemEffects = new List<ItemEffect>();
-
-        public Dictionary<string, ItemEffect> MakeDict()
-        {
-            Dictionary<string, ItemEffect> dict = new Dictionary<string, ItemEffect>();
-            foreach (ItemEffect itemEffect in itemEffects)
-            {
-                dict.Add(itemEffect.itemName, itemEffect);
-            }
-            return dict;
-        }
-    }
-    #endregion
 }

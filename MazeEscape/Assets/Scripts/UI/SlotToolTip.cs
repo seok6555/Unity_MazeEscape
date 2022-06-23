@@ -27,7 +27,7 @@ public class SlotToolTip : MonoBehaviour
         }
         else if (_item.ItemType == Item.eItemType.Used)
         {
-            txt_ItemHowToUsed.text = "우클릭 - 먹기";
+            txt_ItemHowToUsed.text = "우클릭 - 사용";
         }
         else
         {

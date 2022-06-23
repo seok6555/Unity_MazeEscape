@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     private Camera _camera;
     private PlayerStat _stat;
     private PlayerSound _playerSound;
-    //private Rigidbody _rigidbody;
     private CharacterController _characterController;
     private Animator _animator;
 
@@ -32,7 +31,6 @@ public class PlayerController : MonoBehaviour
     {
         _stat = GetComponent<PlayerStat>();
         _playerSound = GetComponent<PlayerSound>();
-        //_rigidbody = GetComponent<Rigidbody>();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
     }
@@ -57,7 +55,6 @@ public class PlayerController : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
 
         _characterController.Move(move * _stat.MoveSpeed *Time.deltaTime);
-        //_rigidbody.MovePosition(transform.position + move * Time.deltaTime);
 
         //플레이어 움직임 애니메이션
         _animator.SetFloat("X", x);
@@ -157,6 +154,11 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Trap"))
         {
             Debug.Log("함정에 걸렸습니다.");
+        }
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("몬스터에게 걸렸습니다.");
+            GameManager.Instance.CurrentGameState(eGameState.Dead);
         }
     }
 }

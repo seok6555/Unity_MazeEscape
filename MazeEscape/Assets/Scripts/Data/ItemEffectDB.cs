@@ -20,7 +20,7 @@ public class ItemEffectDB : MonoBehaviour
     [SerializeField]
     private SlotToolTip _slotToolTip;
 
-    private const string Battery = "Battery";
+    private const string Battery = "Battery", Key = "Key";
 
     // ½½·Ô ÅøÆÁ ÃâÇö
     public void ShowToolTip(Item _item)
