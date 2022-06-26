@@ -73,8 +73,11 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         {
             if (item != null)
             {
-                _itemEffectDB.UseItem(item);
-                SetSlotCount(-1);
+                if (item.ItemType != Item.eItemType.Ingredient)
+                {
+                    _itemEffectDB.UseItem(item);
+                    SetSlotCount(-1);
+                }
             }
         }
     }
