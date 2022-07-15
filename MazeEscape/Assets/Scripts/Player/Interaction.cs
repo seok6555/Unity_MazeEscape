@@ -12,18 +12,26 @@ public class Interaction : MonoBehaviour
     [SerializeField]
     private Inventory _inventory;
 
-    // Æ¯Á¤ ·¹ÀÌ¾î¿¡¸¸ ¹İÀÀÇÏµµ·Ï ¼³Á¤
-    // Item - ¹èÅÍ¸®, ¿­¼è
-    // Door - ¹®
+    // íŠ¹ì • ë ˆì´ì–´ì—ë§Œ ë°˜ì‘í•˜ë„ë¡ ì„¤ì •
+    // Item - ë°°í„°ë¦¬, ì—´ì‡ 
+    // Door - ë¬¸
     [SerializeField]
     private LayerMask layerMaskInteract;
     private RaycastHit hitInfo;
 
-    // »óÈ£ÀÛ¿ë »ç°Å¸®
     [SerializeField]
-    private int rayLength = 2;
+    private int rayLength = 2;  // ìƒí˜¸ì‘ìš© ì‚¬ê±°ë¦¬
 
     private bool isInteractionActivated = false;
+
+    private Material outline;   // ì™¸ê³½ì„  ì…°ì´ë”
+    private Renderer renderers; // í˜„ì¬ ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œ ì˜¤ë¸Œì íŠ¸ì˜ Renderer
+    private List<Material> materialList = new List<Material>(); // renderersì˜ Materialì„ ë¦¬ìŠ¤íŠ¸ë¡œ ë°›ì•„ì˜´.
+
+    void Start()
+    {
+        outline = new Material(Shader.Find("Custom/OutlineShader"));
+    }
 
     // Update is called once per frame
     void Update()
@@ -32,14 +40,14 @@ public class Interaction : MonoBehaviour
         TryInteract();
     }
 
-    // Å©·Î½ºÇì¾î¿¡ »óÈ£ÀÛ¿ë ¿ÀºêÁ§Æ®°¡ ÀÖ´ÂÁö Ã¼Å©ÇÏ´Â ÇÔ¼ö
+    // í¬ë¡œìŠ¤í—¤ì–´ì— ìƒí˜¸ì‘ìš© ì˜¤ë¸Œì íŠ¸ê°€ ìˆëŠ”ì§€ ì²´í¬í•˜ëŠ” í•¨ìˆ˜
     private void CheckObject()
     {
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hitInfo, rayLength, layerMaskInteract))
         {
             if (hitInfo.transform != null)
             {
-                ObjectInfoAppear();
+                ObjectInfoAppear(hitInfo.transform);
             }
         }
         else
@@ -48,7 +56,7 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    // E Å°¸¦ ´­·¯¼­ »óÈ£ÀÛ¿ëÀ» ½ÃµµÇÏ´Â ÇÔ¼ö
+    // E í‚¤ë¥¼ ëˆŒëŸ¬ì„œ ìƒí˜¸ì‘ìš©ì„ ì‹œë„í•˜ëŠ” í•¨ìˆ˜
     private void TryInteract()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -58,24 +66,45 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    // »óÈ£ÀÛ¿ë ¿ÀºêÁ§Æ®°¡ ¾Õ¿¡ ÀÖÀ» ¶§ UI Ç¥±â ÇÔ¼ö
-    private void ObjectInfoAppear()
+    // ìƒí˜¸ì‘ìš© ì˜¤ë¸Œì íŠ¸ê°€ ì•ì— ìˆì„ ë•Œ UI í‘œê¸° í•¨ìˆ˜
+    private void ObjectInfoAppear(Transform _hitObject)
     {
+        // í˜„ì¬ ìƒí˜¸ì‘ìš©ì´ ê°€ëŠ¥í•œ ì˜¤ë¸Œì íŠ¸ì˜ Rendererì»´í¬ë„ŒíŠ¸ë¥¼ ë°›ì•„ì˜´.
+        renderers = _hitObject.GetComponent<Renderer>();
+        // ì™¸ê³½ì„  ì…°ì´ë” Materialì˜ ì¤‘ë³µ ìƒì„±ì„ ë§‰ê¸°ìœ„í•´ ifë¬¸ìœ¼ë¡œ í•œë²ˆë§Œ ìƒì„±.
+        if (!materialList.Contains(outline))
+        {
+            materialList.Clear();
+            materialList.AddRange(renderers.sharedMaterials);
+            materialList.Add(outline);
+            renderers.materials = materialList.ToArray();
+        }
+
         isInteractionActivated = true;
         crosshairUI.color = Color.red;
         interactMessage.gameObject.SetActive(true);
         interactMessage.text = "(E)";
     }
 
-    // »óÈ£ÀÛ¿ë ¿ÀºêÁ§Æ®°¡ ¾Õ¿¡ ¾øÀ» ¶§ UI Ç¥±â ÇÔ¼ö
+    // ìƒí˜¸ì‘ìš© ì˜¤ë¸Œì íŠ¸ê°€ ì•ì— ì—†ì„ ë•Œ UI í‘œê¸° í•¨ìˆ˜
     private void ObjectInfoDisappear()
     {
+        // ì´ˆê¸°ì— ìƒí˜¸ì‘ìš© ì˜¤ë¸Œì íŠ¸ê°€ ì—†ì„ ë•Œì˜ ì˜¤ë¥˜ë¥¼ ë§‰ê¸°ìœ„í•´ ifë¬¸ìœ¼ë¡œ Rendererê°€ ìˆì„ë•Œë§Œ ì²´í¬í•˜ì—¬ ì…°ì´ë” ì œê±°.
+        if (renderers != null)
+        {
+            materialList.Clear();
+            materialList.AddRange(renderers.sharedMaterials);
+            materialList.Remove(outline);
+            renderers.materials = materialList.ToArray();
+            renderers = null;
+        }
+
         isInteractionActivated = false;
         crosshairUI.color = Color.white;
         interactMessage.gameObject.SetActive(false);
     }
 
-    // »óÈ£ÀÛ¿ë ½ÇÇà ÇÔ¼ö
+    // ìƒí˜¸ì‘ìš© ì‹¤í–‰ í•¨ìˆ˜
     private void CanInteract()
     {
         if (isInteractionActivated)
@@ -90,19 +119,19 @@ public class Interaction : MonoBehaviour
 
                 if (hitInfo.transform.CompareTag("Door"))
                 {
-                    // ¹® ¿©´Â ±â´É ±¸Çö.
-                    // ÀÎº¥Åä¸®¿¡ ¿­¼è°¡ ÀÖ´ÂÁö ¾ø´ÂÁö Ã¼Å©ÇÏ´Â ¹æ½ÄÀ¸·Î ±¸Çö ¿¹Á¤.
-                    //if (_inventory.UseItem())
-                    //{
-                    //    if (hitInfo.transform.TryGetComponent<Door>(out Door _door))
-                    //    {
-                    //        _door.DoorOpen();
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    Debug.Log("¿­¼è°¡ ¾øÀ½");
-                    //}
+                    // ë¬¸ ì—¬ëŠ” ê¸°ëŠ¥ êµ¬í˜„.
+                    // ì¸ë²¤í† ë¦¬ì— ì—´ì‡ ê°€ ìˆëŠ”ì§€ ì—†ëŠ”ì§€ ì²´í¬í•˜ëŠ” ë°©ì‹ìœ¼ë¡œ êµ¬í˜„ ì˜ˆì •.
+                    if (_inventory.CheckItem("Key"))
+                    {
+                        if (hitInfo.transform.TryGetComponent<Door>(out Door _door))
+                        {
+                            _door.DoorOpen();
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("ì—´ì‡ ê°€ ì—†ìŒ");
+                    }
                 }
                 ObjectInfoDisappear();
             }

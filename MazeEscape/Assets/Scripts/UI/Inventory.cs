@@ -86,4 +86,23 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    // 인벤토리에 해당 아이템이 있는지 체크
+    public bool CheckItem(string _itemName)
+    {
+        // 슬롯 배열을 순회
+        for (int i = 0; i < slots.Length; i++)
+        {
+            // 슬롯이 비어있지 않으면 실행
+            if (slots[i].item != null)
+            {
+                // 아이템중에 찾고자 하는 아이템이 있으면 true 반환
+                if (slots[i].item.ItemName == _itemName)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
